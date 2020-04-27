@@ -11,8 +11,9 @@ import { ReactComponent as CharacterBoyFaceLeft } from "./sprites/character_boy_
 function App() {
 	return (
 		<>
-			<CharacterBoyFaceLeft />
-			<svg></svg>
+			<div className="App-header">
+				<CharacterBoyFaceLeft />
+			</div>
 			<Route exact path="/register" component={Register} />
 			<Route path="/login" component={Login} />
 			<Route path="/game" component={Map} />
