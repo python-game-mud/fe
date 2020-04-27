@@ -12,7 +12,7 @@ function App() {
 	return (
 		<>
 			<div className="App-header">
-				<CharacterBoyFaceLeft />
+				<CharacterBoyFaceLeft width="300px" height="300px" />
 			</div>
 			<Route exact path="/register" component={Register} />
 			<Route path="/login" component={Login} />
