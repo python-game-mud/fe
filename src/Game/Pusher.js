@@ -78,10 +78,6 @@ export default function Pusher(props) {
 		props.setTop(props.top + 10);
 	};
 
-	const handleEvent = e => {
-		console.log(e);
-	};
-
 	React.useEffect(function changeDirectionCharacterIsFacing() {
 		const keyDownListener = document.addEventListener("keydown", e => {
 			switch (e.key.toLowerCase()) {
@@ -103,7 +99,7 @@ export default function Pusher(props) {
 	});
 
 	return (
-		<SideBar onKeyDown={handleEvent}>
+		<SideBar>
 			<ButtonHolder>
 				<Left onClick={moveLeft}></Left>
 				<Right onClick={moveRight}> </Right>
