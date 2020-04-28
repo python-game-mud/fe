@@ -12,7 +12,7 @@ export default function Map() {
 	const [top, setTop] = useState(10);
 	const [rooms, setRooms] = useState([]);
 	const [players, setPlayers] = useState([]);
-	const [characterDirection, setCharacterDirection] = useState("left");
+	const [characterDirection, setCharacterDirection] = useState("right");
 
 	const Maps = styled.div`
 		background: #282c34;
@@ -27,6 +27,10 @@ export default function Map() {
 		left: ${left}%;
 		top: ${top}%;
 	`;
+
+	const faceRight = () => setCharacterDirection("right");
+	const faceLeft = () => setCharacterDirection("left");
+
 	useEffect(() => {
 		axiosWithAuth()
 			.get("api/adv/init")
