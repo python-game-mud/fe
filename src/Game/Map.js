@@ -1,18 +1,21 @@
 import React, { useEffect, useState } from "react";
 import axiosWithAuth from "../utils/axiosWithAuth";
-import axios from "axios";
 import styled from "styled-components";
 import img from "./man.png";
 import Pusher from "./Pusher";
+
+import { ReactComponent as CharacterBoyFaceLeft } from "../sprites/character_boy_faceLeft.svg";
+import { ReactComponent as CharacterBoyFaceRight } from "../sprites/character_boy_faceRight.svg";
 
 export default function Map() {
 	const [left, setLeft] = useState(10);
 	const [top, setTop] = useState(10);
 	const [rooms, setRooms] = useState([]);
 	const [players, setPlayers] = useState([]);
+	const [characterDirection, setCharacterDirection] = useState("left");
 
 	const Maps = styled.div`
-		background: green;
+		background: #282c34;
 		min-height: 100vh;
 		width: 80vw;
 	`;
@@ -57,7 +60,11 @@ export default function Map() {
 	return (
 		<Maps>
 			<Pusher left={left} top={top} setLeft={setLeft} setTop={setTop} />
-			<Person />
+			{characterDirection.toLowerCase() === "left" ? (
+				<CharacterBoyFaceLeft height="300px" width="300px" />
+			) : (
+				<CharacterBoyFaceRight height="300px" width="300px" />
+			)}
 		</Maps>
 	);
 }
