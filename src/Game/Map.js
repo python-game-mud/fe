@@ -27,35 +27,36 @@ export default function Map() {
 		left: ${left}%;
 		top: ${top}%;
 	`;
+	useEffect(() => {
+		axiosWithAuth()
+			.get("api/adv/init")
+			.then(res => {
+				console.log(res);
+			})
+			.catch(console.error);
 
-	axiosWithAuth()
-		.get("api/adv/init")
-		.then(res => {
-			console.log(res);
-		})
-		.catch(console.error);
-
-	axiosWithAuth()
-		.get("api/adv/rooms")
-		.then(res => {
-			Array.isArray(res.data) &&
-				setRooms(
-					res.data.map(
-						({ uuid, title, description, n_to, s_to, e_to, w_to }) => ({
-							uuid,
-							title,
-							description,
-							n_to,
-							s_to,
-							e_to,
-							w_to,
-						})
-					)
-				);
-			Array.isArray(res.data) &&
-				setPlayers(res.data.map(({ players }) => ({ players })));
-		})
-		.catch(console.error);
+		axiosWithAuth()
+			.get("api/adv/rooms")
+			.then(res => {
+				Array.isArray(res.data) &&
+					setRooms(
+						res.data.map(
+							({ uuid, title, description, n_to, s_to, e_to, w_to }) => ({
+								uuid,
+								title,
+								description,
+								n_to,
+								s_to,
+								e_to,
+								w_to,
+							})
+						)
+					);
+				Array.isArray(res.data) &&
+					setPlayers(res.data.map(({ players }) => ({ players })));
+			})
+			.catch(console.error);
+	}, []);
 
 	return (
 		<Maps>
