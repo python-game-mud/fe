@@ -95,7 +95,8 @@ export default function Pusher(props) {
 				case "arrowdown":
 					moveDown();
 				default:
-				// do nothing
+					// do nothing
+					break;
 			}
 		});
 
