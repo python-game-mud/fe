@@ -1,63 +1,81 @@
 import React, { useEffect, useState } from "react";
 import axiosWithAuth from "../utils/axiosWithAuth";
-import axios from "axios";
 import styled from "styled-components";
 import img from "./man.png";
 import Pusher from "./Pusher";
+
+import { ReactComponent as CharacterBoyFaceLeft } from "../sprites/character_boy_faceLeft.svg";
+import { ReactComponent as CharacterBoyFaceRight } from "../sprites/character_boy_faceRight.svg";
 
 export default function Map() {
 	const [left, setLeft] = useState(10);
 	const [top, setTop] = useState(10);
 	const [rooms, setRooms] = useState([]);
 	const [players, setPlayers] = useState([]);
+	const [characterDirection, setCharacterDirection] = useState("right");
 
 	const Maps = styled.div`
-		background: green;
+		background: #282c34;
 		min-height: 100vh;
 		width: 80vw;
 	`;
-	const Person = styled.div`
-		background-image: url(${img});
-		height: 9vh;
-		width: 5vw;
+	const Character = styled.div`
 		position: absolute;
 		left: ${left}%;
 		top: ${top}%;
 	`;
 
-	axiosWithAuth()
-		.get("api/adv/init")
-		.then(res => {
-			console.log(res);
-		})
-		.catch(console.error);
+	const faceRight = () => setCharacterDirection("right");
+	const faceLeft = () => setCharacterDirection("left");
 
-	axiosWithAuth()
-		.get("api/adv/rooms")
-		.then(res => {
-			Array.isArray(res.data) &&
-				setRooms(
-					res.data.map(
-						({ uuid, title, description, n_to, s_to, e_to, w_to }) => ({
-							uuid,
-							title,
-							description,
-							n_to,
-							s_to,
-							e_to,
-							w_to,
-						})
-					)
-				);
-			Array.isArray(res.data) &&
-				setPlayers(res.data.map(({ players }) => ({ players })));
-		})
-		.catch(console.error);
+	useEffect(function fetchData() {
+		axiosWithAuth()
+			.get("api/adv/init")
+			.then(res => {
+				console.log(res);
+			})
+			.catch(console.error);
+
+		axiosWithAuth()
+			.get("api/adv/rooms")
+			.then(res => {
+				Array.isArray(res.data) &&
+					setRooms(
+						res.data.map(
+							({ uuid, title, description, n_to, s_to, e_to, w_to }) => ({
+								uuid,
+								title,
+								description,
+								n_to,
+								s_to,
+								e_to,
+								w_to,
+							})
+						)
+					);
+				Array.isArray(res.data) &&
+					setPlayers(res.data.map(({ players }) => ({ players })));
+			})
+			.catch(console.error);
+	}, []);
 
 	return (
 		<Maps>
-			<Pusher left={left} top={top} setLeft={setLeft} setTop={setTop} />
-			<Person />
+			<Pusher
+				left={left}
+				top={top}
+				setLeft={setLeft}
+				setTop={setTop}
+				characterDirection={characterDirection}
+				setCharacterDirection={setCharacterDirection}
+			/>
+			<Character>
+				{characterDirection.toLowerCase() === "left" ? (
+					<CharacterBoyFaceLeft height="300px" width="300px" />
+				) : (
+					<CharacterBoyFaceRight height="300px" width="300px" />
+				)}
+			</Character>
 		</Maps>
 	);
 }
