@@ -9,10 +9,12 @@ export default function Register(props) {
 		password1: "",
 		password2: "",
 	});
+	const [errors, setErrors] = useState([]);
 
 	const handleChange = e => {
 		setUser({ ...user, [e.target.name]: e.target.value });
 	};
+
 	const handleSubmit = e => {
 		e.preventDefault();
 		axios
@@ -25,11 +27,18 @@ export default function Register(props) {
 				console.log(res);
 				localStorage.setItem("the_mud_game_token", res.data.key);
 				history.push("/game");
+				setErrors([]);
 			})
 			.catch(err => {
-				console.log(err);
+				setErrors([]); // reset any errors from the last submission
+				console.error(err.response);
+				err.response.data.password1 && setErrors(err.response.data.password1);
+				err.response.data.non_field_errors &&
+					setErrors([...errors, ...err.response.data.non_field_errors]);
 			});
 	};
+
+	const routeToLoginPage = e => (e.preventDefault(), history.push("/login"));
 
 	return (
 		<div>
@@ -56,7 +65,14 @@ export default function Register(props) {
 				></input>
 				<button onClick={handleSubmit}> LETS GOOOOOOO </button>
 			</form>
-			<h1 onClick={() => history.push("/login")}>Already have an account???</h1>
+			<h1 onClick={routeToLoginPage}>Already have an account???</h1>
+			{errors.length > 0 && (
+				<div>
+					{errors.map(e => (
+						<span>{e} </span>
+					))}
+				</div>
+			)}
 		</div>
 	);
 }
