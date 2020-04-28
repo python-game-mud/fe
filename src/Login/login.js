@@ -9,6 +9,7 @@ export default function Register(props) {
 		username: "",
 		password: "",
 	});
+	const [errors, setErrors] = useState([]);
 
 	const handleChange = e => {
 		setUser({ ...user, [e.target.name]: e.target.value });
@@ -27,12 +28,13 @@ export default function Register(props) {
 				history.push("/game");
 			})
 			.catch(err => {
-				console.log(err);
+				console.error(err.response);
+				err.response.data.non_field_errors &&
+					setErrors(err.response.data.non_field_errors);
 			});
 	};
 	const routeToRegistrationPage = e => {
 		e.preventDefault();
-		console.log("hi");
 		history.push("/register");
 	};
 
@@ -55,6 +57,13 @@ export default function Register(props) {
 				<button onClick={handleSubmit}> LETS GOOOOOOO </button>
 			</form>
 			<h1 onClick={routeToRegistrationPage}>Don't have an account???</h1>
+			{errors.length > 0 && (
+				<div>
+					{errors.map(e => (
+						<span>{e} </span>
+					))}
+				</div>
+			)}
 		</div>
 	);
 }
