@@ -43,12 +43,14 @@ export default function Register(props) {
 				<h1>Password:</h1>
 				<input
 					name="password1"
+					type="password"
 					value={user.password1}
 					onChange={handleChange}
 				></input>
 				<h1>Confirm Password:</h1>
 				<input
 					name="password2"
+					type="password"
 					value={user.password2}
 					onChange={handleChange}
 				></input>
