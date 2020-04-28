@@ -67,7 +67,7 @@ export default function Map() {
  *  */
 
 /**
- *  A graph link for the "react-d3-graph" library
+ *  A graph link for the "react-d3-graph" library.
  * @typedef {Object} Edge
  * @property {string} source - the source node
  * @property {string} target - the target node
@@ -88,7 +88,7 @@ function createEdges(source, targets) {
 
 //
 /**
- * Returns an array of arrays, with each subarray containing multiple edges
+ * Returns an array of arrays, with each subarray containing multiple edges.
  * @param {Object[]} rooms
  * @returns {Edge[][]}
  */
@@ -111,13 +111,13 @@ function flattenGraphLinks(edges) {
 }
 
 /**
- * A node for the the "react-d3-graph" library
+ * A node for the the "react-d3-graph" library.
  * @typedef {Object} Node
  * @property {string} id - the identifier of the node
  */
 
 /**
- * Transform an array of rooms to an array of nodes
+ * Transform an array of rooms to an array of nodes.
  * @param {Object[]} rooms
  * @returns {Node[]}
  */
