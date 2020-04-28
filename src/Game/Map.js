@@ -77,7 +77,7 @@ export default function Map() {
  * Create an array of objects to be used as links for the "react-d3-graph" library.
  * @param {string} source
  * @param {string[]} targets
- * @returns {Edge[]>}
+ * @returns {Edge[]}
  */
 function createEdges(source, targets) {
 	return targets.reduce(
