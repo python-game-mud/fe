@@ -51,7 +51,8 @@ export default function Map() {
 				);
 			Array.isArray(res.data) &&
 				setPlayers(res.data.map(({ players }) => ({ players })));
-		});
+		})
+		.catch(console.error);
 	return (
 		<Maps>
 			<Pusher left={left} top={top} setLeft={setLeft} setTop={setTop} />
