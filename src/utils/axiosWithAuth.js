@@ -7,7 +7,7 @@ const axiosWithAuth = () => {
 			"https://cors-anywhere.herokuapp.com/" +
 			"http://themudgame.herokuapp.com/",
 		headers: {
-			Authorization: { token: token },
+			Authorization: token,
 		},
 	});
 };
