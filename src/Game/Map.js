@@ -35,20 +35,22 @@ export default function Map() {
 	axiosWithAuth()
 		.get("api/adv/rooms")
 		.then(res => {
-			setRooms(
-				res.data.map(
-					({ uuid, title, description, n_to, s_to, e_to, w_to }) => ({
-						uuid,
-						title,
-						description,
-						n_to,
-						s_to,
-						e_to,
-						w_to,
-					})
-				)
-			);
-			setPlayers(res.data.map(({ players }) => ({ players })));
+			Array.isArray(res.data) &&
+				setRooms(
+					res.data.map(
+						({ uuid, title, description, n_to, s_to, e_to, w_to }) => ({
+							uuid,
+							title,
+							description,
+							n_to,
+							s_to,
+							e_to,
+							w_to,
+						})
+					)
+				);
+			Array.isArray(res.data) &&
+				setPlayers(res.data.map(({ players }) => ({ players })));
 		});
 	return (
 		<Maps>
