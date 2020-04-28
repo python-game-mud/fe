@@ -1,13 +1,13 @@
-import axios from 'axios'
+import axios from "axios";
 
 const axiosWithAuth = () => {
-  const token = localStorage.getItem('token')
-  return axios.create({
-    baseURL: 'https://lambda-mud-test.herokuapp.com/',
-    headers: {
-      Authorization: {'token': token}
-    },
-  })
-}
+	const token = localStorage.getItem("token");
+	return axios.create({
+		baseURL: "http://themudgame.herokuapp.com/",
+		headers: {
+			Authorization: { token: token },
+		},
+	});
+};
 
-export default axiosWithAuth
+export default axiosWithAuth;
