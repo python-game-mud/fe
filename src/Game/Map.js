@@ -53,6 +53,7 @@ export default function Map() {
 				setPlayers(res.data.map(({ players }) => ({ players })));
 		})
 		.catch(console.error);
+
 	return (
 		<Maps>
 			<Pusher left={left} top={top} setLeft={setLeft} setTop={setTop} />
