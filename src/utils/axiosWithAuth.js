@@ -5,7 +5,7 @@ const axiosWithAuth = () => {
 	return axios.create({
 		baseURL: "http://themudgame.herokuapp.com/",
 		headers: {
-			Authorization: { token: token },
+			Authorization: token,
 		},
 	});
 };
