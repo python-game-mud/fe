@@ -32,7 +32,6 @@ export default function Register(props) {
 	};
 	const routeToRegistrationPage = e => {
 		e.preventDefault();
-		console.log("hi");
 		history.push("/register");
 	};
 
