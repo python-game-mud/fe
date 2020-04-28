@@ -68,7 +68,7 @@ export default function Map() {
 
 /**
  *  A graph link for the "react-d3-graph" library
- * @typedef {Object} GraphLink
+ * @typedef {Object} Edge
  * @property {string} source - the source node
  * @property {string} target - the target node
  */
@@ -77,9 +77,9 @@ export default function Map() {
  * Create an array of objects to be used as links for the "react-d3-graph" library.
  * @param {string} source
  * @param {string[]} targets
- * @returns {GraphLink[]>}
+ * @returns {Edge[]>}
  */
-function createGraphLinks(source, targets) {
+function createEdges(source, targets) {
 	return targets.reduce(
 		(acc, t) => acc.append({ source: source, target: t }),
 		[]
@@ -90,24 +90,24 @@ function createGraphLinks(source, targets) {
 /**
  * Returns an array of arrays, with each subarray containing multiple GraphLinks
  * @param {Object[]} rooms
- * @returns {GraphLink[][]}
+ * @returns {Edge[][]}
  */
-function mapRoomsToGraphLinks(rooms) {
+function mapRoomsToEdges(rooms) {
 	return rooms.map(room => {
 		const nonEmptyRooms = [room.n_to, room.s_to, room.e_to, room.w_to].filter(
 			direction => parseInt(direction) !== 0
 		);
-		return createGraphLinks(room.title, nonEmptyRooms);
+		return createEdges(room.title, nonEmptyRooms);
 	});
 }
 
 /**
  *
- * @param {GraphLink[][]} graphLinks
- * @returns {GraphLink[]}
+ * @param {Edge[][]} edges
+ * @returns {Edge[]}
  */
-function flattenGraphLinks(graphLinks) {
-	return graphLinks.flat();
+function flattenGraphLinks(edges) {
+	return edges.flat();
 }
 
 /**
