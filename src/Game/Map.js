@@ -31,7 +31,7 @@ export default function Map() {
 	const faceRight = () => setCharacterDirection("right");
 	const faceLeft = () => setCharacterDirection("left");
 
-	useEffect(() => {
+	useEffect(function fetchData() {
 		axiosWithAuth()
 			.get("api/adv/init")
 			.then(res => {
@@ -64,7 +64,14 @@ export default function Map() {
 
 	return (
 		<Maps>
-			<Pusher left={left} top={top} setLeft={setLeft} setTop={setTop} />
+			<Pusher
+				left={left}
+				top={top}
+				setLeft={setLeft}
+				setTop={setTop}
+				characterDirection={characterDirection}
+				setCharacterDirection={setCharacterDirection}
+			/>
 			{characterDirection.toLowerCase() === "left" ? (
 				<CharacterBoyFaceLeft height="300px" width="300px" />
 			) : (

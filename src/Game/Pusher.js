@@ -82,6 +82,26 @@ export default function Pusher(props) {
 		console.log(e);
 	};
 
+	React.useEffect(function changeDirectionCharacterIsFacing() {
+		const keyDownListener = document.addEventListener("keydown", e => {
+			switch (e.key.toLowerCase()) {
+				case "arrowleft":
+					props.setCharacterDirection("left");
+					moveLeft();
+					break;
+				case "arrowright":
+					props.setCharacterDirection("right");
+					moveRight();
+					break;
+
+				default:
+				// do nothing
+			}
+		});
+
+		return () => document.removeEventListener("keydown", keyDownListener);
+	});
+
 	return (
 		<SideBar onKeyDown={handleEvent}>
 			<ButtonHolder>
