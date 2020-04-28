@@ -81,6 +81,9 @@ export default function Pusher(props) {
 	React.useEffect(function changeDirectionCharacterIsFacing() {
 		const keyDownListener = document.addEventListener("keydown", e => {
 			switch (e.key.toLowerCase()) {
+				case "arrowup":
+					moveUp();
+					break;
 				case "arrowleft":
 					props.setCharacterDirection("left");
 					moveLeft();
@@ -89,7 +92,8 @@ export default function Pusher(props) {
 					props.setCharacterDirection("right");
 					moveRight();
 					break;
-
+				case "arrowdown":
+					moveDown();
 				default:
 				// do nothing
 			}

@@ -19,10 +19,7 @@ export default function Map() {
 		min-height: 100vh;
 		width: 80vw;
 	`;
-	const Person = styled.div`
-		background-image: url(${img});
-		height: 9vh;
-		width: 5vw;
+	const Character = styled.div`
 		position: absolute;
 		left: ${left}%;
 		top: ${top}%;
@@ -72,11 +69,13 @@ export default function Map() {
 				characterDirection={characterDirection}
 				setCharacterDirection={setCharacterDirection}
 			/>
-			{characterDirection.toLowerCase() === "left" ? (
-				<CharacterBoyFaceLeft height="300px" width="300px" />
-			) : (
-				<CharacterBoyFaceRight height="300px" width="300px" />
-			)}
+			<Character>
+				{characterDirection.toLowerCase() === "left" ? (
+					<CharacterBoyFaceLeft height="300px" width="300px" />
+				) : (
+					<CharacterBoyFaceRight height="300px" width="300px" />
+				)}
+			</Character>
 		</Maps>
 	);
 }
