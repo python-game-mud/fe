@@ -5,7 +5,7 @@ const axiosWithAuth = () => {
 	return axios.create({
 		baseURL:
 			// "https://cors-anywhere.herokuapp.com/" +
-			"http://themudgame.herokuapp.com/",
+			"https://themudgame.herokuapp.com/",
 		headers: {
 			Authorization: token,
 		},

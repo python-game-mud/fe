@@ -8,6 +8,7 @@ import Map from "./Game/Map";
 function App() {
 	return (
 		<>
+			<p>Welcome to the mud game</p>
 			<Route exact path="/register" component={Register} />
 			<Route path="/login" component={Login} />
 			<Route path="/game" component={Map} />
