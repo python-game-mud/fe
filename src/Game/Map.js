@@ -88,7 +88,7 @@ function createEdges(source, targets) {
 
 //
 /**
- * Returns an array of arrays, with each subarray containing multiple GraphLinks
+ * Returns an array of arrays, with each subarray containing multiple edges
  * @param {Object[]} rooms
  * @returns {Edge[][]}
  */
