@@ -30,9 +30,7 @@ export default function Map() {
 		.then(res => {
 			console.log(res);
 		})
-		.catch(err => {
-			console.log(err);
-		});
+		.catch(console.error);
 
 	axiosWithAuth()
 		.get("api/adv/rooms")
