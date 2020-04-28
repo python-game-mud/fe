@@ -1,8 +1,8 @@
 import React from "react";
 import "./App.css";
 import { Route } from "react-router-dom";
-import Register from "./Login/Register";
-import Login from "./Login/Login";
+import Register from "./Login/register";
+import Login from "./Login/login";
 import Map from "./Game/Map";
 
 import { ReactComponent as CharacterBoyFaceLeft } from "./sprites/character_boy_faceLeft.svg";
