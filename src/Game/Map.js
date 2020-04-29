@@ -116,7 +116,7 @@ function mapRoomsToEdges(rooms) {
 		const nonEmptyRooms = [room.n_to, room.s_to, room.e_to, room.w_to].filter(
 			direction => parseInt(direction) !== 0
 		);
-		return createEdges(room.title, nonEmptyRooms);
+		return createEdges(room.id, nonEmptyRooms);
 	});
 }
 
@@ -141,5 +141,5 @@ function flattenGraphLinks(edges) {
  * @returns {Node[]}
  */
 function mapRoomsToNodes(rooms) {
-	return rooms.map(room => ({ id: room.title }));
+	return rooms.map(room => ({ id: room.id }));
 }
