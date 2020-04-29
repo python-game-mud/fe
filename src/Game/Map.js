@@ -3,30 +3,37 @@ import axiosWithAuth from "../utils/axiosWithAuth";
 import styled from "styled-components";
 import img from "./man.png";
 import Pusher from "./Pusher";
-
-import { ReactComponent as CharacterBoyFaceLeft } from "../sprites/character_boy_faceLeft.svg";
-import { ReactComponent as CharacterBoyFaceRight } from "../sprites/character_boy_faceRight.svg";
+import { Graph } from "react-d3-graph";
 
 export default function Map() {
-	const [left, setLeft] = useState(10);
-	const [top, setTop] = useState(10);
 	const [rooms, setRooms] = useState([]);
 	const [players, setPlayers] = useState([]);
-	const [characterDirection, setCharacterDirection] = useState("right");
 
 	const Maps = styled.div`
 		background: #282c34;
 		min-height: 100vh;
 		width: 80vw;
 	`;
-	const Character = styled.div`
-		position: absolute;
-		left: ${left}%;
-		top: ${top}%;
-	`;
 
-	const faceRight = () => setCharacterDirection("right");
-	const faceLeft = () => setCharacterDirection("left");
+	const graphData = {
+		nodes: mapRoomsToNodes(rooms),
+		links: flattenGraphLinks(mapRoomsToEdges(rooms)),
+	};
+
+	const graphConfig = {
+		nodeHighlightBehavior: true,
+		node: {
+			color: "lightgreen",
+			size: 120,
+			highlightStrokeColor: "blue",
+		},
+		link: { highlightColor: "lightblue" },
+	};
+
+	const onClickGraph = () => {
+		// TODO: expand/shrink the graph
+		console.log("graph clicked");
+	};
 
 	useEffect(function fetchData() {
 		axiosWithAuth()
@@ -43,8 +50,8 @@ export default function Map() {
 				Array.isArray(res.data) &&
 					setRooms(
 						res.data.map(
-							({ uuid, title, description, n_to, s_to, e_to, w_to }) => ({
-								uuid,
+							({ id, title, description, n_to, s_to, e_to, w_to }) => ({
+								id,
 								title,
 								description,
 								n_to,
@@ -62,21 +69,15 @@ export default function Map() {
 
 	return (
 		<Maps>
-			<Pusher
-				left={left}
-				top={top}
-				setLeft={setLeft}
-				setTop={setTop}
-				characterDirection={characterDirection}
-				setCharacterDirection={setCharacterDirection}
-			/>
-			<Character>
-				{characterDirection.toLowerCase() === "left" ? (
-					<CharacterBoyFaceLeft height="300px" width="300px" />
-				) : (
-					<CharacterBoyFaceRight height="300px" width="300px" />
-				)}
-			</Character>
+			<Pusher />
+			{rooms.length > 0 && (
+				<Graph
+					id="map"
+					data={graphData}
+					config={graphConfig}
+					onClickGraph={onClickGraph}
+				/>
+			)}
 		</Maps>
 	);
 }
@@ -99,8 +100,9 @@ export default function Map() {
  * @returns {Edge[]}
  */
 function createEdges(source, targets) {
+	console.log({ targets });
 	return targets.reduce(
-		(acc, t) => acc.append({ source: source, target: t }),
+		(acc, t) => acc.concat({ source: source, target: t }),
 		[]
 	);
 }
