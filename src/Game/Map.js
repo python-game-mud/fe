@@ -30,15 +30,16 @@ export default function Map() {
 
 	useEffect(function fetchData() {
 		axiosWithAuth()
-			.get("api/adv/init")
+			.get("api/adv/init/")
 			.then(res => {
 				console.log(res);
 			})
 			.catch(console.error);
 
 		axiosWithAuth()
-			.get("api/adv/rooms")
+			.get("api/adv/rooms/")
 			.then(res => {
+				console.log("Rooms:", res);
 				Array.isArray(res.data) &&
 					setRooms(
 						res.data.map(
