@@ -2,43 +2,42 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import styled from "styled-components";
 import { useHistory, Link } from "react-router-dom";
-import { ReactComponent as CharacterBoyFaceLeft } from "../sprites/character_boy_faceLeft.svg";
 
-export default function Register(props) {
-	const [loading, setLoading] = useState(true);
+const Page = styled.video`
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	min-width: 100%;
+	min-height: 100%;
+	width: auto;
+	height: auto;
+	z-index: -1;
+	transform: translateX(-50%) translateY(-50%);
+`;
+const Centerer = styled.div`
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100vw;
+	height: 100vh;
+`;
+const LoginArea = styled.div`
+	background-color: rgb(34, 139, 34, 0.5);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 3%;
+	border-radius: 10px;
+`;
+
+export default function Login(props) {
+	// const [loading, setLoading] = useState(true);
 	const history = useHistory();
 	const [user, setUser] = useState({
 		username: "",
 		password: "",
 	});
 	const [errors, setErrors] = useState([]);
-
-	const Page = styled.video`
-		position: fixed;
-		top: 50%;
-		left: 50%;
-		min-width: 100%;
-		min-height: 100%;
-		width: auto;
-		height: auto;
-		z-index: -1;
-		transform: translateX(-50%) translateY(-50%);
-	`;
-	const Centerer = styled.div`
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		width: 100vw;
-		height: 100vh;
-	`;
-	const LoginArea = styled.div`
-		background-color: rgb(34, 139, 34, 0.5);
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		padding: 3%;
-		border-radius: 10px;
-	`;
 
 	const handleChange = e => {
 		setUser({ ...user, [e.target.name]: e.target.value });
