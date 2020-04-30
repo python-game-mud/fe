@@ -53,7 +53,7 @@ export default function Login(props) {
 			)
 			.then(res => {
 				console.log(res);
-				localStorage.setItem("token", res.data.key);
+				localStorage.setItem("the_mud_game_token", res.data.key);
 				history.push("/game");
 			})
 			.catch(err => {
