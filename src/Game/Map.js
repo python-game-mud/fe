@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { axiosWithAuth } from "../utils/axiosWithAuth";
 import styled from "styled-components";
-import img from "./man.png";
 import Pusher from "./Pusher";
 import { Graph } from "react-d3-graph";
 
@@ -48,13 +47,6 @@ export default function Map() {
 	};
 
 	useEffect(function fetchData() {
-		axiosWithAuth()
-			.get("api/adv/init/")
-			.then(res => {
-				console.log(res);
-			})
-			.catch(err => console.error(err.response));
-
 		axiosWithAuth()
 			.get("api/adv/rooms/")
 			.then(res => {

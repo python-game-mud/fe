@@ -40,6 +40,7 @@ export default function Login(props) {
 	const [errors, setErrors] = useState([]);
 
 	const handleChange = e => {
+		e.preventDefault();
 		setUser({ ...user, [e.target.name]: e.target.value });
 	};
 
