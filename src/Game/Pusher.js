@@ -5,8 +5,7 @@ import Chat from "./Chat/Chat";
 
 import { ReactComponent as CharacterBoyFaceLeft } from "../sprites/character_boy_faceLeft.svg";
 import { ReactComponent as CharacterBoyFaceRight } from "../sprites/character_boy_faceRight.svg";
-import axiosWithAuth from "../utils/axiosWithAuth";
-import { set } from "d3";
+import { axiosWithAuth } from "../utils/axiosWithAuth";
 import { ReactComponent as Doors } from "../sprites/door.svg";
 import { ReactComponent as Doors2 } from "../sprites/door2.svg";
 
