@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axiosWithAuth from "../utils/axiosWithAuth";
+import { axiosWithAuth } from "../utils/axiosWithAuth";
 import styled from "styled-components";
 import img from "./man.png";
 import Pusher from "./Pusher";

@@ -12,4 +12,6 @@ const axiosWithAuth = () => {
 	});
 };
 
-export default axiosWithAuth;
+const getToken = () => localStorage.getItem("the_mud_game_token");
+
+export { axiosWithAuth, getToken };
