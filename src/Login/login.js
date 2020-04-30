@@ -4,8 +4,44 @@ import styled from 'styled-components'
 import { useHistory } from "react-router-dom";
 import { ReactComponent as CharacterBoyFaceLeft } from "../sprites/character_boy_faceLeft.svg";
 
+
+const Page = styled.video`
+position: fixed;
+top: 50%;
+left: 50%;
+min-width: 100%;
+min-height: 100%;
+width: auto;
+height: auto;
+z-index: -1;
+transform: translateX(-50%) translateY(-50%);
+`
+const Centerer = styled.div`
+display: flex;
+justify-content: center;
+align-items: center;
+width: 100vw;
+height: 100vh;
+`
+const LoginArea = styled.div`
+background-color: rgb(34,139,34, .5);
+display: flex;
+flex-direction: column;
+align-items: center;
+padding: 3%;
+border-radius: 10px
+`
+
+const Loading = styled.h1`
+color: red;
+margin: 0;
+text-align: center;
+font-size: 4rem;
+`
+
+
 export default function Register(props) {
-	const [loading, setLoading] = useState(true)
+	const [loading, setLoading] = useState(false)
 	const history = useHistory();
 	const [user, setUser] = useState({
 		username: "",
@@ -13,42 +49,8 @@ export default function Register(props) {
 	});
 	const [errors, setErrors] = useState([]);
 
-
-	const Page = styled.video`
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    min-width: 100%;
-    min-height: 100%;
-    width: auto;
-    height: auto;
-    z-index: -1;
-	transform: translateX(-50%) translateY(-50%);
-	`
-	const Centerer = styled.div`
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	width: 100vw;
-	height: 100vh;
-	`
-	const LoginArea = styled.div`
-	background-color: rgb(34,139,34, .5);
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	padding: 3%;
-	border-radius: 10px
-	`
-
-	const Loading = styled.h1`
-	color: red;
-	margin: 0;
-	text-align: center;
-	font-size: 4rem;
-	`
-
 	const handleChange = e => {
+		e.preventDefault()
 		setUser({ ...user, [e.target.name]: e.target.value });
 	};
 	const handleSubmit = e => {
@@ -61,7 +63,7 @@ export default function Register(props) {
 			)
 			.then(res => {
 				console.log(res);
-				localStorage.setItem("token", res.data.key);
+				localStorage.setItem("the_mud_game_token", res.data.key);
 				history.push("/game");
 			})
 			.catch(err => {
@@ -78,14 +80,6 @@ export default function Register(props) {
 
 	return (
 		<Centerer>
-				<Page src={require('./jungle.mp4')} autoPlay onEnded={() => {setLoading(false) }} /> 
-				{loading == true ? 
-				<div>
-				<CharacterBoyFaceLeft width={'500px'} height={`500px`} />
-				<Loading> LOADING...</Loading>
-				</div>
-				:
-
 				<LoginArea>
 				<form onSubmit={handleSubmit}>
 					<h1>Username:</h1>

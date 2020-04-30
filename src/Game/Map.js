@@ -39,12 +39,6 @@ export default function Map() {
 	};
 
 	useEffect(function fetchData() {
-		axiosWithAuth()
-			.get("api/adv/init/")
-			.then(res => {
-				console.log(res);
-			})
-			.catch(console.error);
 
 		axiosWithAuth()
 			.get("api/adv/rooms/")
@@ -105,7 +99,6 @@ export default function Map() {
  * @returns {Edge[]}
  */
 function createEdges(source, targets) {
-	console.log({ targets });
 	return targets.reduce(
 		(acc, t) => acc.concat({ source: source, target: t }),
 		[]
