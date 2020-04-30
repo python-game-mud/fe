@@ -79,8 +79,8 @@ export default function Map() {
 					data={graphData}
 					config={graphConfig}
 					onClickGraph={onClickGraph}
-					width={"200px"}
-					height={"200px"}
+					width="500px"
+					height="500px"
 				/>
 			)}
 		</Maps>
