@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Chat from "./Chat/Chat";
 
@@ -23,7 +24,7 @@ const ButtonHolder = styled.div`
 
 const Right = styled.div`
 	position: relative;
-	left: 64%;
+	left: 56%;
 	top: 8%;
 	border-color: transparent purple;
 	border-style: solid;
@@ -34,8 +35,8 @@ const Right = styled.div`
 
 const Left = styled.div`
 	position: relative;
-	left: 12%;
-	top: 37%;
+	left: 5%;
+	top: 28%;
 	border-color: transparent purple;
 	border-style: solid;
 	border-width: 40px 80px 40px 0px;
@@ -44,8 +45,8 @@ const Left = styled.div`
 `;
 const Up = styled.div`
 	position: relative;
-	left: 38%;
-	top: -45%;
+	left: 32.5%;
+	top: -35%;
 	border-color: purple transparent;
 	border-style: solid;
 	border-width: 0px 40px 70px 40px;
@@ -55,8 +56,8 @@ const Up = styled.div`
 
 const Down = styled.div`
 	position: relative;
-	left: 38%;
-	top: -16%;
+	left: 32.5%;
+	top: -5%;
 	border-color: purple transparent;
 	border-style: solid;
 	border-width: 70px 40px 0px 40px;
@@ -123,6 +124,11 @@ export default function Pusher(props) {
 	return (
 		<>
 			<SideBar>
+				<div>
+					<Link to="/logout">
+						<button>logout</button>
+					</Link>
+				</div>
 				<ButtonHolder>
 					<Left onClick={moveLeft}></Left>
 					<Right onClick={moveRight}> </Right>
