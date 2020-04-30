@@ -1,6 +1,38 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
+import styled from 'styled-components';
+
+const Background = styled.div`
+display:flex;
+height: 100vh;
+width: 100vw;
+background-image: url('https://images.unsplash.com/photo-1470058869958-2a77ade41c02?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80');
+align-items: center;
+justify-content: center;
+flex-direction: column;
+background-repeat:no-repeat;
+background-size: cover;
+`
+const LoginBox = styled.div`
+background-color: rgba(255, 255, 255, 0.8);
+padding:3%;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+`
+
+const Level = styled.div`
+display: flex;
+width: 100%;
+align-items: center;
+`
+
+const Input = styled.input`
+width: 75%;
+height: 50px;
+`
 
 export default function Register(props) {
 	const history = useHistory();
@@ -41,38 +73,46 @@ export default function Register(props) {
 	const routeToLoginPage = e => (e.preventDefault(), history.push("/login"));
 
 	return (
-		<div>
+		<Background>
+			<LoginBox >
 			<form onSubmit={handleSubmit}>
+				<Level>
 				<h1>Username:</h1>
-				<input
+				<Input
 					name="username"
 					value={user.username}
 					onChange={handleChange}
-				></input>
+				></Input>
+				</Level>
+				<Level>
 				<h1>Password:</h1>
-				<input
+				<Input
 					name="password1"
 					type="password"
 					value={user.password1}
 					onChange={handleChange}
-				></input>
+				></Input>
+				</Level>
+				<Level>
 				<h1>Confirm Password:</h1>
-				<input
+				<Input
 					name="password2"
 					type="password"
 					value={user.password2}
 					onChange={handleChange}
-				></input>
+				></Input>
+				</Level>
 				<button onClick={handleSubmit}> LETS GOOOOOOO </button>
 			</form>
 			<h1 onClick={routeToLoginPage}>Already have an account???</h1>
 			{errors.length > 0 && (
-				<div>
+				<Level>
 					{errors.map(e => (
 						<span>{e} </span>
 					))}
-				</div>
+				</Level>
 			)}
-		</div>
+			</LoginBox>
+		</Background>
 	);
 }
