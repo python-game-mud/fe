@@ -22,10 +22,13 @@ export default function Map() {
 
 	const graphConfig = {
 		nodeHighlightBehavior: true,
+		staticGraph: true,
 		node: {
 			color: "lightgreen",
-			size: 120,
+			size: 30,
 			highlightStrokeColor: "blue",
+			x: 200,
+			fontSize: 0,
 		},
 		link: { highlightColor: "lightblue" },
 	};
@@ -76,6 +79,8 @@ export default function Map() {
 					data={graphData}
 					config={graphConfig}
 					onClickGraph={onClickGraph}
+					width={"200px"}
+					height={"200px"}
 				/>
 			)}
 		</Maps>
@@ -142,6 +147,8 @@ function flattenGraphLinks(edges) {
  * @param {Object[]} rooms
  * @returns {Node[]}
  */
+
 function mapRoomsToNodes(rooms) {
-	return rooms.map(room => ({ id: room.id }));
+
+	return rooms.map(room => ({ id: room.id, x: 10* (Math.round(room.id % 10)), y: 10 * (Math.round(room.id /10))}))
 }
