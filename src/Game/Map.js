@@ -49,7 +49,7 @@ export default function Map() {
 		axiosWithAuth()
 			.get("api/adv/rooms/")
 			.then(res => {
-				console.log("Rooms:", res);
+				console.log("Rooms:", res.data);
 				Array.isArray(res.data) &&
 					setRooms(
 						res.data.map(
@@ -149,6 +149,9 @@ function flattenGraphLinks(edges) {
  */
 
 function mapRoomsToNodes(rooms) {
-
-	return rooms.map(room => ({ id: room.id, x: 10* (Math.round(room.id % 10)), y: 10 * (Math.round(room.id /10))}))
+	return rooms.map(room => ({
+		id: room.id,
+		x: 10 * Math.round(room.id % 10),
+		y: 10 * Math.round(room.id / 10),
+	}));
 }
