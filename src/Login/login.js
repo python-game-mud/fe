@@ -1,11 +1,37 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import styled from 'styled-components'
-import { useHistory } from "react-router-dom";
-import { ReactComponent as CharacterBoyFaceLeft } from "../sprites/character_boy_faceLeft.svg";
+import styled from "styled-components";
+import { useHistory, Link } from "react-router-dom";
 
-export default function Register(props) {
-	const [loading, setLoading] = useState(true)
+const Page = styled.video`
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	min-width: 100%;
+	min-height: 100%;
+	width: auto;
+	height: auto;
+	z-index: -1;
+	transform: translateX(-50%) translateY(-50%);
+`;
+const Centerer = styled.div`
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100vw;
+	height: 100vh;
+`;
+const LoginArea = styled.div`
+	background-color: rgb(34, 139, 34, 0.5);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 3%;
+	border-radius: 10px;
+`;
+
+export default function Login(props) {
+	// const [loading, setLoading] = useState(true);
 	const history = useHistory();
 	const [user, setUser] = useState({
 		username: "",
@@ -13,50 +39,16 @@ export default function Register(props) {
 	});
 	const [errors, setErrors] = useState([]);
 
-
-	const Page = styled.video`
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    min-width: 100%;
-    min-height: 100%;
-    width: auto;
-    height: auto;
-    z-index: -1;
-	transform: translateX(-50%) translateY(-50%);
-	`
-	const Centerer = styled.div`
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	width: 100vw;
-	height: 100vh;
-	`
-	const LoginArea = styled.div`
-	background-color: rgb(34,139,34, .5);
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	padding: 3%;
-	border-radius: 10px
-	`
-
-	const Loading = styled.h1`
-	color: red;
-	margin: 0;
-	text-align: center;
-	font-size: 4rem;
-	`
-
 	const handleChange = e => {
 		setUser({ ...user, [e.target.name]: e.target.value });
 	};
+
 	const handleSubmit = e => {
 		e.preventDefault();
 		axios
 			.post(
 				"https://cors-anywhere.herokuapp.com/" +
-				"http://themudgame.herokuapp.com/api/login/",
+					"http://themudgame.herokuapp.com/api/login/",
 				user
 			)
 			.then(res => {
@@ -75,22 +67,14 @@ export default function Register(props) {
 		history.push("/register");
 	};
 
-
 	return (
 		<Centerer>
-				<Page src={require('./jungle.mp4')} autoPlay onEnded={() => {setLoading(false) }} /> 
-				{loading == true ? 
-				<div>
-				<CharacterBoyFaceLeft width={'500px'} height={`500px`} />
-				<Loading> LOADING...</Loading>
-				</div>
-				:
-
-				<LoginArea>
+			<LoginArea>
 				<form onSubmit={handleSubmit}>
 					<h1>Username:</h1>
 					<input
 						name="username"
+						type="text"
 						value={user.username}
 						onChange={handleChange}
 					></input>
@@ -104,9 +88,7 @@ export default function Register(props) {
 				</form>
 				<button onClick={handleSubmit}> LETS GOOOOOOO </button>
 				<h1 onClick={routeToRegistrationPage}>Don't have an account???</h1>
-				</LoginArea>
-				
-				}
+			</LoginArea>
 			{errors.length > 0 && (
 				<div>
 					{errors.map(e => (
@@ -114,6 +96,12 @@ export default function Register(props) {
 					))}
 				</div>
 			)}
+			<div>
+				<p>Don't have an account yet?</p>
+				<p>
+					Click <Link to="/register">here</Link> to register.
+				</p>
+			</div>
 		</Centerer>
 	);
 }

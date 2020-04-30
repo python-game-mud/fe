@@ -17,7 +17,7 @@ export default function Map() {
 
 	const graphData = {
 		nodes: mapRoomsToNodes(rooms),
-		links: flattenGraphLinks(mapRoomsToEdges(rooms)),
+		links: flattenEdges(mapRoomsToEdges(rooms)),
 	};
 
 	const graphConfig = {
@@ -44,12 +44,12 @@ export default function Map() {
 			.then(res => {
 				console.log(res);
 			})
-			.catch(console.error);
+			.catch(err => console.error(err.response));
 
 		axiosWithAuth()
 			.get("api/adv/rooms/")
 			.then(res => {
-				console.log("Rooms:", res);
+				console.log("Rooms:", res.data);
 				Array.isArray(res.data) &&
 					setRooms(
 						res.data.map(
@@ -67,7 +67,7 @@ export default function Map() {
 				Array.isArray(res.data) &&
 					setPlayers(res.data.map(({ players }) => ({ players })));
 			})
-			.catch(console.error);
+			.catch(err => console.error(err.response));
 	}, []);
 
 	return (
@@ -132,7 +132,7 @@ function mapRoomsToEdges(rooms) {
  * @param {Edge[][]} edges
  * @returns {Edge[]}
  */
-function flattenGraphLinks(edges) {
+function flattenEdges(edges) {
 	return edges.flat();
 }
 
@@ -149,6 +149,9 @@ function flattenGraphLinks(edges) {
  */
 
 function mapRoomsToNodes(rooms) {
-
-	return rooms.map(room => ({ id: room.id, x: 10* (Math.round(room.id % 10)), y: 10 * (Math.round(room.id /10))}))
+	return rooms.map(room => ({
+		id: room.id,
+		x: 10 * Math.round(room.id % 10),
+		y: 10 * Math.round(room.id / 10),
+	}));
 }
