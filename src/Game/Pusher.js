@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import Chat from "./Chat/Chat";
+
+import { ReactComponent as CharacterBoyFaceLeft } from "../sprites/character_boy_faceLeft.svg";
+import { ReactComponent as CharacterBoyFaceRight } from "../sprites/character_boy_faceRight.svg";
 
 const SideBar = styled.div`
 	width: 20vw;
@@ -62,56 +65,80 @@ const Down = styled.div`
 `;
 
 export default function Pusher(props) {
+	const [left, setLeft] = useState(10);
+	const [top, setTop] = useState(10);
+	const [characterDirection, setCharacterDirection] = useState("right");
+
+	const Character = styled.div`
+		position: absolute;
+		left: ${left}%;
+		top: ${top}%;
+	`;
+
 	const moveLeft = () => {
-		props.setLeft(props.left - 10);
+		setCharacterDirection("left");
+		setLeft(left - 10);
+		// console.log("LEFT:", left);
 	};
 
 	const moveRight = () => {
-		props.setLeft(props.left + 10);
+		setCharacterDirection("right");
+		setLeft(left + 10);
+		// console.log("LEFT:", left);
 	};
 
 	const moveUp = () => {
-		props.setTop(props.top - 10);
+		setTop(top - 10);
+		// console.log("TOP:", top);
 	};
 
 	const moveDown = () => {
-		props.setTop(props.top + 10);
+		setTop(top + 10);
+		// console.log("TOP:", top);
 	};
 
-	React.useEffect(function changeDirectionCharacterIsFacing() {
-		const keyDownListener = document.addEventListener("keydown", e => {
-			switch (e.key.toLowerCase()) {
-				case "arrowup":
-					moveUp();
-					break;
-				case "arrowleft":
-					props.setCharacterDirection("left");
-					moveLeft();
-					break;
-				case "arrowright":
-					props.setCharacterDirection("right");
-					moveRight();
-					break;
-				case "arrowdown":
-					moveDown();
-				default:
-					// do nothing
-					break;
-			}
-		});
+	// React.useEffect(function moveCharacter() {
+	// 	const keyDownListener = document.addEventListener("keydown", e => {
+	// 		switch (e.key.toLowerCase()) {
+	// 			case "arrowup":
+	// 				moveUp();
+	// 				break;
+	// 			case "arrowleft":
+	// 				moveLeft();
+	// 				break;
+	// 			case "arrowright":
+	// 				moveRight();
+	// 				break;
+	// 			case "arrowdown":
+	// 				moveDown();
+	// 			default:
+	// 				// do nothing
+	// 				break;
+	// 		}
+	// 	});
 
-		return () => document.removeEventListener("keydown", keyDownListener);
-	});
+	// return () => document.removeEventListener("keydown", keyDownListener);
+	// }, []);
 
 	return (
-		<SideBar>
-			<ButtonHolder>
-				<Left onClick={moveLeft}></Left>
-				<Right onClick={moveRight}> </Right>
-				<Up onClick={moveUp}> </Up>
-				<Down onClick={moveDown}></Down>
-			</ButtonHolder>
-			{/* <Chat /> */}
-		</SideBar>
+		<>
+			<SideBar>
+				<ButtonHolder>
+					<Left onClick={moveLeft}></Left>
+					<Right onClick={moveRight}> </Right>
+					<Up onClick={moveUp}> </Up>
+					<Down onClick={moveDown}></Down>
+				</ButtonHolder>
+
+				{/* <Chat /> */}
+			</SideBar>
+			<Character>
+				{characterDirection.toLowerCase() === "left" ? (
+					<CharacterBoyFaceLeft height="300px" width="300px" />
+				) : (
+					<CharacterBoyFaceRight height="300px" width="300px" />
+				)}
+			</Character>
+		</>
 	);
 }
