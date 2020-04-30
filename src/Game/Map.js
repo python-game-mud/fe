@@ -24,11 +24,12 @@ export default function Map() {
 		nodeHighlightBehavior: true,
 		staticGraph: true,
 		node: {
-			color: "lightgreen",
-			size: 30,
-			highlightStrokeColor: "blue",
-			x: 200,
+			color: "#ffdf00",
+			size: 250,
+			highlightStrokeColor: "red",
 			fontSize: 0,
+			rendderLabel: false,
+			symbolType: "diamond",
 		},
 		link: { highlightColor: "lightblue" },
 	};
@@ -72,17 +73,19 @@ export default function Map() {
 
 	return (
 		<Maps>
-			<Pusher />
-			{rooms.length > 0 && (
-				<Graph
-					id="map"
-					data={graphData}
-					config={graphConfig}
-					onClickGraph={onClickGraph}
-					width="500px"
-					height="500px"
-				/>
-			)}
+			<div>
+				<Pusher />
+				{rooms.length > 0 && (
+					<Graph
+						id="map"
+						data={graphData}
+						config={graphConfig}
+						onClickGraph={onClickGraph}
+						// width="500px"
+						// height="500px"
+					/>
+				)}
+			</div>
 		</Maps>
 	);
 }
@@ -151,7 +154,7 @@ function flattenEdges(edges) {
 function mapRoomsToNodes(rooms) {
 	return rooms.map(room => ({
 		id: room.id,
-		x: 10 * Math.round(room.id % 10),
-		y: 10 * Math.round(room.id / 10),
+		x: 30 * Math.round(room.id % 15),
+		y: 30 * Math.round(room.id / 15),
 	}));
 }
