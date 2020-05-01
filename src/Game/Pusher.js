@@ -13,14 +13,14 @@ import { ReactComponent as Doors2 } from "../sprites/door2.svg";
 import Decorations from './decorations'
 
 const SideBar = styled.div`
-	width: 20vw;
-	height: 100vh;
-	background-color: red;
-	position: absolute;
-	right: 0;
-	display: flex;
-	flex-direction: column;
-	justify-content: flex-end;
+  width: 20vw;
+  height: 100vh;
+  background-color: red;
+  position: absolute;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
 `;
 // const ButtonHolder = styled.div`
 // 	background: black;
@@ -75,13 +75,13 @@ const SideBar = styled.div`
 // `;
 
 const Room = styled.div`
-	position: fixed;
-	width: 60%;
-	height: 60%;
-	background-color: green;
-	top: 20%;
-	left: 10%;
-	border: 30px solid brown;
+  position: fixed;
+  width: 60%;
+  height: 60%;
+  background-color: green;
+  top: 30%;
+  left: 10%;
+  border: 30px solid brown;
 `;
 
 const ButtonHolder = styled.div`
@@ -137,19 +137,19 @@ width: 0px;
 `
 
 const Door = styled.div`
-	position: fixed;
-	left: 60%;
-	top: 30%;
+  position: fixed;
+  left: 60%;
+  top: 40%;
 `;
 const EastDoor = styled.div`
-	position: fixed;
-	left: 0%;
-	top: 30%;
+  position: fixed;
+  left: 0%;
+  top: 40%;
 `;
 const NorthDoor = styled.div`
-	position: fixed;
-	left: 30%;
-	top: 0%;
+  position: fixed;
+  left: 30%;
+  top: 0%;
 `;
 const SouthDoor = styled.div`
 
@@ -181,14 +181,14 @@ export default function Pusher() {
 	const [info, setInfo] = useState("");
 	const [id, setId] = useState(0)
 	const [characterDirection, setCharacterDirection] = useState("right");
-	const [CurrentRoom, setCurrentRoom] = useState()
-	// const { setCurrentRoom } = useContext(CurrentRoomCtx);
+	// const [CurrentRoom2, setCurrentRoom2] = useState()
+	const { setCurrentRoom } = useContext(CurrentRoomCtx);
 
-	const Character = styled.div`
-		position: absolute;
-		left: ${left}%;
-		top: ${top}%;
-	`;
+  const Character = styled.div`
+    position: absolute;
+    left: ${left}%;
+    top: ${top}%;
+  `;
 
 	useEffect(
 		function fetchData() {
@@ -332,16 +332,16 @@ export default function Pusher() {
 		// console.log("LEFT:", left);
 	};
 
-	const moveRight = () => {
-		setCharacterDirection("right");
-		setLeft(left + 10);
-		// console.log("LEFT:", left);
-	};
+  const moveRight = () => {
+    setCharacterDirection("right");
+    setLeft(left + 10);
+    // console.log("LEFT:", left);
+  };
 
-	const moveUp = () => {
-		setTop(top - 10);
-		// console.log("TOP:", top);
-	};
+  const moveUp = () => {
+    setTop(top - 10);
+    // console.log("TOP:", top);
+  };
 
 	const moveDown = () => {
 		setTop(top + 10);
@@ -352,11 +352,11 @@ export default function Pusher() {
 	return (
 		<>
 			<SideBar>
-				{/* <div>
+				<div>
 					<Link to="/logout">
 						<button>logout</button>
 					</Link>
-				</div> */}
+				</div>
 				<InfoStream info={info} id={id}/>
 				<ButtonHolder>
 					<Left onClick={moveLeft}></Left>

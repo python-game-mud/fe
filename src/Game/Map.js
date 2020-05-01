@@ -6,16 +6,17 @@ import Pusher from "./Pusher";
 import { CurrentRoomCtx } from "../App";
 import InfoStream from './InfoStream';
 const Maps = styled.div`
-	background: #282c34;
-	min-height: 100vh;
-	width: 80vw;
+  background: #282c34;
+  min-height: 100vh;
+  width: 80vw;
 `;
 
 const CenteredDiv = styled.div`
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	padding-left: 5%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 5%;
+  padding-left: 5%;
 `;
 
 export default function Map() {
@@ -26,21 +27,22 @@ export default function Map() {
 	const graphData = {
 		nodes: mapRoomsToNodes(rooms),
 		links: flattenEdges(mapRoomsToEdges(rooms)),
-	};
-
-	const graphConfig = {
+	  };
+	
+	  const graphConfig = {
 		nodeHighlightBehavior: true,
 		staticGraph: true,
 		node: {
-			color: "orange",
-			size: 250,
-			highlightStrokeColor: "red",
-			fontSize: 0,
-			rendderLabel: false,
-			symbolType: "diamond",
+		  color: "orange",
+		  size: 250,
+		  highlightStrokeColor: "red",
+		  fontSize: 0,
+		  rendderLabel: false,
+		  symbolType: "diamond",
 		},
 		link: { highlightColor: "lightblue" },
-	};
+	  };
+	
 
 	const onClickGraph = () => {
 		// TODO: expand/shrink the graph
@@ -127,10 +129,10 @@ export default function Map() {
  * @returns {Edge[]}
  */
 function createEdges(source, targets) {
-	return targets.reduce(
-		(acc, t) => acc.concat({ source: source, target: t }),
-		[]
-	);
+  return targets.reduce(
+    (acc, t) => acc.concat({ source: source, target: t }),
+    []
+  );
 }
 
 //
@@ -140,12 +142,12 @@ function createEdges(source, targets) {
  * @returns {Edge[][]}
  */
 function mapRoomsToEdges(rooms) {
-	return rooms.map(room => {
-		const nonEmptyRooms = [room.n_to, room.s_to, room.e_to, room.w_to].filter(
-			direction => parseInt(direction) !== 0
-		);
-		return createEdges(room.id, nonEmptyRooms);
-	});
+  return rooms.map((room) => {
+    const nonEmptyRooms = [room.n_to, room.s_to, room.e_to, room.w_to].filter(
+      (direction) => parseInt(direction) !== 0
+    );
+    return createEdges(room.id, nonEmptyRooms);
+  });
 }
 
 /**
@@ -154,7 +156,7 @@ function mapRoomsToEdges(rooms) {
  * @returns {Edge[]}
  */
 function flattenEdges(edges) {
-	return edges.flat();
+  return edges.flat();
 }
 
 /**
@@ -170,9 +172,9 @@ function flattenEdges(edges) {
  */
 
 function mapRoomsToNodes(rooms) {
-	return rooms.map(room => ({
-		id: room.id,
-		x: 30 * Math.round(room.id % 15),
-		y: 30 * Math.round(room.id / 15),
-	}));
+  return rooms.map((room) => ({
+    id: room.id,
+    x: 30 * Math.round(room.id % 15),
+    y: 30 * Math.round(room.id / 15),
+  }));
 }
