@@ -13,75 +13,24 @@ import { ReactComponent as Doors2 } from "../sprites/door2.svg";
 import Decorations from './decorations'
 
 const SideBar = styled.div`
-	width: 20vw;
-	height: 100vh;
-	background-color: red;
-	position: absolute;
-	right: 0;
-	display: flex;
-	flex-direction: column;
-	justify-content: flex-end;
+  width: 20vw;
+  height: 100vh;
+  background-color: red;
+  position: absolute;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
 `;
-// const ButtonHolder = styled.div`
-// 	background: black;
-// 	width: 80%;
-// 	height: 30%;
-// 	position: absolute;
-// 	left: 10%;
-// 	top: 10%;
-// `;
-
-// const Right = styled.div`
-// 	position: relative;
-// 	left: 56%;
-// 	top: 8%;
-// 	border-color: transparent purple;
-// 	border-style: solid;
-// 	border-width: 40px 0px 40px 80px;
-// 	height: 0px;
-// 	width: 0px;
-// `;
-
-// const Left = styled.div`
-// 	position: relative;
-// 	left: 5%;
-// 	top: 28%;
-// 	border-color: transparent purple;
-// 	border-style: solid;
-// 	border-width: 40px 80px 40px 0px;
-// 	height: 0px;
-// 	width: 0px;
-// `;
-// const Up = styled.div`
-// 	position: relative;
-// 	left: 32.5%;
-// 	top: -35%;
-// 	border-color: purple transparent;
-// 	border-style: solid;
-// 	border-width: 0px 40px 70px 40px;
-// 	height: 0px;
-// 	width: 0px;
-// `;
-
-// const Down = styled.div`
-// 	position: relative;
-// 	left: 32.5%;
-// 	top: -5%;
-// 	border-color: purple transparent;
-// 	border-style: solid;
-// 	border-width: 70px 40px 0px 40px;
-// 	height: 0px;
-// 	width: 0px;
-// `;
 
 const Room = styled.div`
-	position: fixed;
-	width: 60%;
-	height: 60%;
-	background-color: green;
-	top: 20%;
-	left: 10%;
-	border: 30px solid brown;
+  position: fixed;
+  width: 60%;
+  height: 60%;
+  background-color: green;
+  top: 30%;
+  left: 10%;
+  border: 30px solid brown;
 `;
 
 const ButtonHolder = styled.div`
@@ -137,19 +86,19 @@ width: 0px;
 `
 
 const Door = styled.div`
-	position: fixed;
-	left: 60%;
-	top: 30%;
+  position: fixed;
+  left: 60%;
+  top: 40%;
 `;
 const EastDoor = styled.div`
-	position: fixed;
-	left: 0%;
-	top: 30%;
+  position: fixed;
+  left: 0%;
+  top: 40%;
 `;
 const NorthDoor = styled.div`
-	position: fixed;
-	left: 30%;
-	top: 0%;
+  position: fixed;
+  left: 30%;
+  top: 0%;
 `;
 const SouthDoor = styled.div`
 
@@ -184,11 +133,11 @@ export default function Pusher() {
 	const [CurrentRoom, setCurrentRoom] = useState()
 	// const { setCurrentRoom } = useContext(CurrentRoomCtx);
 
-	const Character = styled.div`
-		position: absolute;
-		left: ${left}%;
-		top: ${top}%;
-	`;
+  const Character = styled.div`
+    position: absolute;
+    left: ${left}%;
+    top: ${top}%;
+  `;
 
 	useEffect(
 		function fetchData() {
@@ -332,16 +281,18 @@ export default function Pusher() {
 		// console.log("LEFT:", left);
 	};
 
-	const moveRight = () => {
-		setCharacterDirection("right");
-		setLeft(left + 10);
-		// console.log("LEFT:", left);
-	};
 
-	const moveUp = () => {
-		setTop(top - 10);
-		// console.log("TOP:", top);
-	};
+  const moveRight = () => {
+    setCharacterDirection("right");
+    setLeft(left + 10);
+    // console.log("LEFT:", left);
+  };
+
+  const moveUp = () => {
+    setTop(top - 10);
+    // console.log("TOP:", top);
+  };
+
 
 	const moveDown = () => {
 		setTop(top + 10);
