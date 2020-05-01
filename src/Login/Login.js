@@ -3,18 +3,10 @@ import axios from "axios";
 import styled from "styled-components";
 import { useHistory, Link } from "react-router-dom";
 
-const Page = styled.video`
-	position: fixed;
-	top: 50%;
-	left: 50%;
-	min-width: 100%;
-	min-height: 100%;
-	width: auto;
-	height: auto;
-	z-index: -1;
-	transform: translateX(-50%) translateY(-50%);
-`;
 const Centerer = styled.div`
+	background-image: url('https://images.unsplash.com/photo-1565138146061-e29b079736c0?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=60');
+	background-repeat:no-repeat;
+	background-size: cover;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -29,6 +21,39 @@ const LoginArea = styled.div`
 	padding: 3%;
 	border-radius: 10px;
 `;
+
+const Level = styled.div`
+display: flex;
+width: 100%;
+align-items: center;
+margin: 0;
+justify-content: space-evenly;
+`
+
+const Input = styled.input`
+width: 75%;
+height: 50px;
+font-size: 2rem;
+`
+
+const Label = styled.h1`
+width: 500px;
+`
+
+const Button = styled.button`
+width: 400px;
+height: 100px;
+background: gold;
+border: 1px solid black;
+font-size: 3rem;
+
+&:hover{
+	color: gold;
+	border: 3px solid gold;
+	background: black;
+}
+`
+
 export default function Register(props) {
 	const history = useHistory();
 	const [user, setUser] = useState({
@@ -36,16 +61,17 @@ export default function Register(props) {
 		password: "",
 	});
 	const [errors, setErrors] = useState([]);
-
+	const monkey = new Audio("http://soundbible.com/grab.php?id=1188&type=mp3")
 	const handleChange = e => {
 		setUser({ ...user, [e.target.name]: e.target.value });
 	};
 	const handleSubmit = e => {
+		monkey.play()
 		e.preventDefault();
 		axios
 			.post(
 				"https://cors-anywhere.herokuapp.com/" +
-					"http://themudgame.herokuapp.com/api/login/",
+				"http://themudgame.herokuapp.com/api/login/",
 				user
 			)
 			.then(res => {
@@ -68,21 +94,26 @@ export default function Register(props) {
 		<Centerer>
 			<LoginArea>
 				<form onSubmit={handleSubmit}>
-					<h1>Username:</h1>
-					<input
-						name="username"
-						value={user.username}
-						onChange={handleChange}
-					></input>
-					<h1>Password:</h1>
-					<input
-						name="password"
-						type="password"
-						value={user.password}
-						onChange={handleChange}
-					></input>
-					<button onClick={handleSubmit}> LETS GOOOOOOO </button>
+					<Level>
+						<Label>Username:</Label>
+						<Input
+							name="username"
+							value={user.username}
+							onChange={handleChange}
+						></Input>
+					</Level>
+					<Level>
+						<Label>Password:</Label>
+						<Input
+							name="password"
+							type="password"
+							value={user.password}
+							onChange={handleChange}
+						></Input>
+					</Level>
+					
 				</form>
+				<Button onClick={handleSubmit}> LETS GOOOO </Button>
 				<h1 onClick={routeToRegistrationPage}>Don't have an account???</h1>
 			</LoginArea>
 			{errors.length > 0 && (

@@ -4,7 +4,7 @@ import { Graph } from "react-d3-graph";
 import { axiosWithAuth } from "../utils/axiosWithAuth";
 import Pusher from "./Pusher";
 import { CurrentRoomCtx } from "../App";
-
+import InfoStream from './InfoStream';
 const Maps = styled.div`
   background: #282c34;
   min-height: 100vh;
@@ -20,93 +20,95 @@ const CenteredDiv = styled.div`
 `;
 
 export default function Map() {
-  const [rooms, setRooms] = useState([]);
-  const [players, setPlayers] = useState([]);
-  const { currentRoom } = useContext(CurrentRoomCtx);
+	const [rooms, setRooms] = useState([]);
+	const [players, setPlayers] = useState([]);
+	const { currentRoom } = useContext(CurrentRoomCtx);
 
-  const graphData = {
-    nodes: mapRoomsToNodes(rooms),
-    links: flattenEdges(mapRoomsToEdges(rooms)),
-  };
+	const graphData = {
+		nodes: mapRoomsToNodes(rooms),
+		links: flattenEdges(mapRoomsToEdges(rooms)),
+	  };
+	
+	  const graphConfig = {
+		nodeHighlightBehavior: true,
+		staticGraph: true,
+		node: {
+		  color: "orange",
+		  size: 250,
+		  highlightStrokeColor: "red",
+		  fontSize: 0,
+		  rendderLabel: false,
+		  symbolType: "diamond",
+		},
+		link: { highlightColor: "lightblue" },
+	  };
+	
 
-  const graphConfig = {
-    nodeHighlightBehavior: true,
-    staticGraph: true,
-    node: {
-      color: "orange",
-      size: 250,
-      highlightStrokeColor: "red",
-      fontSize: 0,
-      rendderLabel: false,
-      symbolType: "diamond",
-    },
-    link: { highlightColor: "lightblue" },
-  };
+	const onClickGraph = () => {
+		// TODO: expand/shrink the graph
+		
+	};
 
-  const onClickGraph = () => {
-    // TODO: expand/shrink the graph
-    console.log("graph clicked");
-  };
+	useEffect(function fetchData() {
+		axiosWithAuth()
+			.get("api/adv/rooms/")
+			.then(res => {
+				
+				Array.isArray(res.data) &&
+					setRooms(
+						res.data.map(
+							({ id, title, description, n_to, s_to, e_to, w_to }) => ({
+								id,
+								title,
+								description,
+								n_to,
+								s_to,
+								e_to,
+								w_to,
+							})
+						)
+					);
+				Array.isArray(res.data) &&
+					setPlayers(res.data.map(({ players }) => ({ players })));
+			})
+			.catch(err => console.error(err.response));
+	}, []);
 
-  useEffect(function fetchData() {
-    axiosWithAuth()
-      .get("api/adv/rooms/")
-      .then((res) => {
-        console.log("Rooms:", res.data);
-        Array.isArray(res.data) &&
-          setRooms(
-            res.data.map(
-              ({ id, title, description, n_to, s_to, e_to, w_to }) => ({
-                id,
-                title,
-                description,
-                n_to,
-                s_to,
-                e_to,
-                w_to,
-              })
-            )
-          );
-        Array.isArray(res.data) &&
-          setPlayers(res.data.map(({ players }) => ({ players })));
-      })
-      .catch((err) => console.error(err.response));
-  }, []);
+	React.useLayoutEffect(
+		function highlightCurrentRoom() {
+			setTimeout(() => {
+				const allNodes = Array.from(document.querySelectorAll(".node"));
 
-  React.useLayoutEffect(
-    function highlightCurrentRoom() {
-      setTimeout(() => {
-        const allNodes = Array.from(document.querySelectorAll(".node"));
+				allNodes.forEach(node => {
+					if (node.id === `${currentRoom}`) {
+						// if (node.id === "25") {
+						node.viewportElement.style.fill = "red";
+						node.innerHTML =
+							"<path cursor='pointer' opacity='1' d='M0,-14.71415478191356L8.495221224235612,0L0,14.71415478191356L-8.495221224235612,0Z fill='blue' stroke='none' stroke-width='1.5'></path><text dx='4' dy='.35em' fill='black' font-size='0' font-weight='normal' opacity='1'>95</text>";
+					}
+				});
+			}, 1000);
+		},
+		[currentRoom]
+	);
 
-        allNodes.forEach((node) => {
-          if (node.id === `${currentRoom}`) {
-            node.viewportElement.style.fill = "red";
-            node.innerHTML =
-              "<path cursor='pointer' opacity='1' d='M0,-14.71415478191356L8.495221224235612,0L0,14.71415478191356L-8.495221224235612,0Z fill='blue' stroke='none' stroke-width='1.5'></path><text dx='4' dy='.35em' fill='black' font-size='0' font-weight='normal' opacity='1'>95</text>";
-          }
-        });
-      }, 1000);
-    },
-    [currentRoom]
-  );
-
-  return (
-    <Maps>
-      <Pusher />
-      <CenteredDiv>
-        {rooms.length > 0 && (
-          <Graph
-            id="map"
-            data={graphData}
-            config={graphConfig}
-            onClickGraph={onClickGraph}
-            width={5000}
-            height={5000}
-          />
-        )}
-      </CenteredDiv>
-    </Maps>
-  );
+	return (
+		<Maps>
+			<Pusher />
+			<CenteredDiv>
+				{rooms.length > 0 && (
+					<Graph
+						id="map"
+						data={graphData}
+						config={graphConfig}
+						onClickGraph={onClickGraph}
+						width={5000}
+						height={5000}
+					/>
+				)}
+			</CenteredDiv>
+		</Maps>
+	);
 }
 
 /**
