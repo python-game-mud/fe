@@ -21,17 +21,40 @@ display: flex;
 flex-direction: column;
 align-items: center;
 justify-content: center;
+width: 50%;
+border-radius: 10px;
 `
 
 const Level = styled.div`
 display: flex;
 width: 100%;
 align-items: center;
+margin: 0;
+justify-content: space-evenly;
 `
 
 const Input = styled.input`
 width: 75%;
 height: 50px;
+font-size: 2rem;
+`
+
+const Label = styled.h1`
+width: 500px;
+`
+
+const Button = styled.button`
+width: 400px;
+height: 100px;
+background: gold;
+border: 1px solid black;
+font-size: 3rem;
+
+&:hover{
+	color: gold;
+	border: 3px solid gold;
+	background: black;
+}
 `
 
 export default function Register(props) {
@@ -42,12 +65,13 @@ export default function Register(props) {
 		password2: "",
 	});
 	const [errors, setErrors] = useState([]);
-
+	const monkey = new Audio('http://soundbible.com/grab.php?id=1149&type=mp3')
 	const handleChange = e => {
 		setUser({ ...user, [e.target.name]: e.target.value });
 	};
 
 	const handleSubmit = e => {
+		monkey.play()
 		e.preventDefault();
 		axios
 			.post(
@@ -77,7 +101,7 @@ export default function Register(props) {
 			<LoginBox >
 			<form onSubmit={handleSubmit}>
 				<Level>
-				<h1>Username:</h1>
+				<Label>Username:</Label>
 				<Input
 					name="username"
 					value={user.username}
@@ -85,7 +109,7 @@ export default function Register(props) {
 				></Input>
 				</Level>
 				<Level>
-				<h1>Password:</h1>
+				<Label>Password:</Label>
 				<Input
 					name="password1"
 					type="password"
@@ -94,7 +118,7 @@ export default function Register(props) {
 				></Input>
 				</Level>
 				<Level>
-				<h1>Confirm Password:</h1>
+				<Label>Confirm Password:</Label>
 				<Input
 					name="password2"
 					type="password"
@@ -102,8 +126,8 @@ export default function Register(props) {
 					onChange={handleChange}
 				></Input>
 				</Level>
-				<button onClick={handleSubmit}> LETS GOOOOOOO </button>
 			</form>
+			<Button onClick={handleSubmit}> LETS GOOOO </Button>
 			<h1 onClick={routeToLoginPage}>Already have an account???</h1>
 			{errors.length > 0 && (
 				<Level>
