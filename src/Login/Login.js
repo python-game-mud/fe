@@ -43,14 +43,10 @@ export default function Register(props) {
 	const handleSubmit = e => {
 		e.preventDefault();
 		axios
-			.post(
-				"https://cors-anywhere.herokuapp.com/" +
-					"http://themudgame.herokuapp.com/api/login/",
-				user
-			)
+			.post("http://themudgame.herokuapp.com/api/login/", user)
 			.then(res => {
 				console.log(res);
-				localStorage.setItem("token", res.data.key);
+				localStorage.setItem("the_mud_game_token", res.data.key);
 				history.push("/game");
 			})
 			.catch(err => {
