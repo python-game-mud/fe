@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+
 import Chat from "./Chat/Chat";
+import { CurrentRoomCtx } from "../App";
 
 import { ReactComponent as CharacterBoyFaceLeft } from "../sprites/character_boy_faceLeft.svg";
 import { ReactComponent as CharacterBoyFaceRight } from "../sprites/character_boy_faceRight.svg";
@@ -81,6 +83,22 @@ const Room = styled.div`
 	border: 30px solid brown;
 `;
 
+const Door = styled.div`
+	position: fixed;
+	left: 60%;
+	top: 30%;
+`;
+const EastDoor = styled.div`
+	position: fixed;
+	left: 0%;
+	top: 30%;
+`;
+const NorthDoor = styled.div`
+	position: fixed;
+	left: 30%;
+	top: 0%;
+`;
+
 export default function Pusher(props) {
 	const [left, setLeft] = useState(10);
 	const [top, setTop] = useState(10);
@@ -89,27 +107,14 @@ export default function Pusher(props) {
 	const [info, setInfo] = useState("");
 	const [characterDirection, setCharacterDirection] = useState("right");
 
+	const { setCurrentRoom } = useContext(CurrentRoomCtx);
+
 	const Character = styled.div`
 		position: absolute;
 		left: ${left}%;
 		top: ${top}%;
 	`;
 
-	const Door = styled.div`
-		position: fixed;
-		left: 60%;
-		top: 30%;
-	`;
-	const EastDoor = styled.div`
-		position: fixed;
-		left: 0%;
-		top: 30%;
-	`;
-	const NorthDoor = styled.div`
-		position: fixed;
-		left: 30%;
-		top: 0%;
-	`;
 	useEffect(
 		function fetchData() {
 			if (info.title !== undefined) {
@@ -123,29 +128,14 @@ export default function Pusher(props) {
 			axiosWithAuth()
 				.get("api/adv/init/")
 				.then(res => {
-					console.log(res);
+					console.log("first init", res);
 					setInfo(res.data);
 				})
 				.catch(err => {
 					console.log(err.response);
 				});
 		},
-		[left]
-	);
-
-	useEffect(
-		function fetchData() {
-			axiosWithAuth()
-				.get("api/adv/init/")
-				.then(res => {
-					console.log(res);
-					setInfo(res.data);
-				})
-				.catch(err => {
-					console.log(err.response);
-				});
-		},
-		[top]
+		[left, top]
 	);
 
 	function handleEast(res) {
