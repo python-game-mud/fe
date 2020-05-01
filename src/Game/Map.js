@@ -4,7 +4,7 @@ import { Graph } from "react-d3-graph";
 import { axiosWithAuth } from "../utils/axiosWithAuth";
 import Pusher from "./Pusher";
 import { CurrentRoomCtx } from "../App";
-
+import InfoStream from './InfoStream';
 const Maps = styled.div`
 	background: #282c34;
 	min-height: 100vh;
@@ -44,14 +44,14 @@ export default function Map() {
 
 	const onClickGraph = () => {
 		// TODO: expand/shrink the graph
-		console.log("graph clicked");
+		
 	};
 
 	useEffect(function fetchData() {
 		axiosWithAuth()
 			.get("api/adv/rooms/")
 			.then(res => {
-				console.log("Rooms:", res.data);
+				
 				Array.isArray(res.data) &&
 					setRooms(
 						res.data.map(
