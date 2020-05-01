@@ -7,9 +7,11 @@ const axiosWithAuth = () => {
 			// "https://cors-anywhere.herokuapp.com/" +
 			"https://themudgame.herokuapp.com/",
 		headers: {
-			Authorization: token,
+			Authorization: `Token ${token}`,
 		},
 	});
 };
 
-export default axiosWithAuth;
+const getToken = () => localStorage.getItem("the_mud_game_token");
+
+export { axiosWithAuth, getToken };

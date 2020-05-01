@@ -1,19 +1,25 @@
 import React, { useEffect, useState } from "react";
-import axiosWithAuth from "../utils/axiosWithAuth";
+import { axiosWithAuth } from "../utils/axiosWithAuth";
 import styled from "styled-components";
-import img from "./man.png";
 import Pusher from "./Pusher";
 import { Graph } from "react-d3-graph";
 
-export default function Map() {
+const Maps = styled.div`
+	background: #282c34;
+	min-height: 100vh;
+	width: 80vw;
+`;
+
+const CenteredDiv = styled.div`
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding-left: 5%;
+`;
+
+export default function Map({ currentRoom }) {
 	const [rooms, setRooms] = useState([]);
 	const [players, setPlayers] = useState([]);
-
-	const Maps = styled.div`
-		background: #282c34;
-		min-height: 100vh;
-		width: 80vw;
-	`;
 
 	const graphData = {
 		nodes: mapRoomsToNodes(rooms),
@@ -24,11 +30,12 @@ export default function Map() {
 		nodeHighlightBehavior: true,
 		staticGraph: true,
 		node: {
-			color: "lightgreen",
-			size: 30,
-			highlightStrokeColor: "blue",
-			x: 200,
+			color: "orange",
+			size: 250,
+			highlightStrokeColor: "red",
 			fontSize: 0,
+			rendderLabel: false,
+			symbolType: "diamond",
 		},
 		link: { highlightColor: "lightblue" },
 	};
@@ -39,13 +46,6 @@ export default function Map() {
 	};
 
 	useEffect(function fetchData() {
-		axiosWithAuth()
-			.get("api/adv/init/")
-			.then(res => {
-				console.log(res);
-			})
-			.catch(err => console.error(err.response));
-
 		axiosWithAuth()
 			.get("api/adv/rooms/")
 			.then(res => {
@@ -70,19 +70,40 @@ export default function Map() {
 			.catch(err => console.error(err.response));
 	}, []);
 
+	React.useLayoutEffect(
+		function highlightCurrentRoom() {
+			setTimeout(() => {
+				const allNodes = Array.from(document.querySelectorAll(".node"));
+				console.log("\n HERE", allNodes, "\n\n");
+
+				allNodes.forEach(node => {
+					// if (node.id === `${currentRoom}`) {
+					if (node.id === "25") {
+						node.viewportElement.style.fill = "red";
+						node.innerHTML =
+							"<path cursor='pointer' opacity='1' d='M0,-14.71415478191356L8.495221224235612,0L0,14.71415478191356L-8.495221224235612,0Z fill='blue' stroke='none' stroke-width='1.5'></path><text dx='4' dy='.35em' fill='black' font-size='0' font-weight='normal' opacity='1'>95</text>";
+					}
+				});
+			}, 1000);
+		},
+		[currentRoom]
+	);
+
 	return (
 		<Maps>
 			<Pusher />
-			{rooms.length > 0 && (
-				<Graph
-					id="map"
-					data={graphData}
-					config={graphConfig}
-					onClickGraph={onClickGraph}
-					width={"200px"}
-					height={"200px"}
-				/>
-			)}
+			<CenteredDiv>
+				{rooms.length > 0 && (
+					<Graph
+						id="map"
+						data={graphData}
+						config={graphConfig}
+						onClickGraph={onClickGraph}
+						width={5000}
+						height={5000}
+					/>
+				)}
+			</CenteredDiv>
 		</Maps>
 	);
 }
@@ -105,7 +126,6 @@ export default function Map() {
  * @returns {Edge[]}
  */
 function createEdges(source, targets) {
-	console.log({ targets });
 	return targets.reduce(
 		(acc, t) => acc.concat({ source: source, target: t }),
 		[]
@@ -151,7 +171,7 @@ function flattenEdges(edges) {
 function mapRoomsToNodes(rooms) {
 	return rooms.map(room => ({
 		id: room.id,
-		x: 10 * Math.round(room.id % 10),
-		y: 10 * Math.round(room.id / 10),
+		x: 30 * Math.round(room.id % 15),
+		y: 30 * Math.round(room.id / 15),
 	}));
 }
