@@ -9,6 +9,8 @@ import ProtectedRoute from "./ProtectedRoute";
 import Logout from "./Login/Logout";
 
 function App() {
+	const [currentRoom, setCurrentRoom] = React.useState("1");
+
 	return (
 		<>
 			<Route exact path="/" component={Home} />

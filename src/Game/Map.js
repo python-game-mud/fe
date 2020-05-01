@@ -17,10 +17,9 @@ const CenteredDiv = styled.div`
 	padding-left: 5%;
 `;
 
-export default function Map() {
+export default function Map({ currentRoom }) {
 	const [rooms, setRooms] = useState([]);
 	const [players, setPlayers] = useState([]);
-	const [currentRoom, setCurrentRoom] = useState("1");
 
 	const graphData = {
 		nodes: mapRoomsToNodes(rooms),

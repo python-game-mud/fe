@@ -32,38 +32,6 @@ const LoginArea = styled.div`
 
 export default function Login(props) {
 	// const [loading, setLoading] = useState(true);
-	const history = useHistory();
-	const [user, setUser] = useState({
-		username: "",
-		password: "",
-	});
-	const [errors, setErrors] = useState([]);
-
-	const handleChange = e => {
-		e.preventDefault();
-		setUser({ ...user, [e.target.name]: e.target.value });
-	};
-
-	const handleSubmit = e => {
-		e.preventDefault();
-		axios
-			.post(
-				"https://cors-anywhere.herokuapp.com/" +
-					"http://themudgame.herokuapp.com/api/login/",
-				user
-			)
-			.then(res => {
-				console.log(res);
-				localStorage.setItem("the_mud_game_token", res.data.key);
-				history.push("/game");
-			})
-			.catch(err => {
-				console.error(err.response);
-				err.response.data.non_field_errors &&
-					setErrors(err.response.data.non_field_errors);
-			});
-	};
-	const routeToRegistrationPage = e => {
 		e.preventDefault();
 		history.push("/register");
 	};
