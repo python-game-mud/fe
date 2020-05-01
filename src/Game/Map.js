@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { axiosWithAuth } from "../utils/axiosWithAuth";
+import React, { useEffect, useState, useContext } from "react";
 import styled from "styled-components";
-import Pusher from "./Pusher";
 import { Graph } from "react-d3-graph";
+import { axiosWithAuth } from "../utils/axiosWithAuth";
+import Pusher from "./Pusher";
+import { CurrentRoomCtx } from "../App";
 
 const Maps = styled.div`
 	background: #282c34;
@@ -17,9 +18,10 @@ const CenteredDiv = styled.div`
 	padding-left: 5%;
 `;
 
-export default function Map({ currentRoom }) {
+export default function Map() {
 	const [rooms, setRooms] = useState([]);
 	const [players, setPlayers] = useState([]);
+	const { currentRoom } = useContext(CurrentRoomCtx);
 
 	const graphData = {
 		nodes: mapRoomsToNodes(rooms),
@@ -74,11 +76,10 @@ export default function Map({ currentRoom }) {
 		function highlightCurrentRoom() {
 			setTimeout(() => {
 				const allNodes = Array.from(document.querySelectorAll(".node"));
-				console.log("\n HERE", allNodes, "\n\n");
 
 				allNodes.forEach(node => {
-					// if (node.id === `${currentRoom}`) {
-					if (node.id === "25") {
+					if (node.id === `${currentRoom}`) {
+						// if (node.id === "25") {
 						node.viewportElement.style.fill = "red";
 						node.innerHTML =
 							"<path cursor='pointer' opacity='1' d='M0,-14.71415478191356L8.495221224235612,0L0,14.71415478191356L-8.495221224235612,0Z fill='blue' stroke='none' stroke-width='1.5'></path><text dx='4' dy='.35em' fill='black' font-size='0' font-weight='normal' opacity='1'>95</text>";

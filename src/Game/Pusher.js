@@ -130,6 +130,7 @@ export default function Pusher(props) {
 				.then(res => {
 					console.log("first init", res);
 					setInfo(res.data);
+					setCurrentRoom(res.data.title.split(" ")[1]);
 				})
 				.catch(err => {
 					console.log(err.response);
