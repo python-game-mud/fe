@@ -79,7 +79,6 @@ export default function Map() {
 
 				allNodes.forEach(node => {
 					if (node.id === `${currentRoom}`) {
-						// if (node.id === "25") {
 						node.viewportElement.style.fill = "red";
 						node.innerHTML =
 							"<path cursor='pointer' opacity='1' d='M0,-14.71415478191356L8.495221224235612,0L0,14.71415478191356L-8.495221224235612,0Z fill='blue' stroke='none' stroke-width='1.5'></path><text dx='4' dy='.35em' fill='black' font-size='0' font-weight='normal' opacity='1'>95</text>";
