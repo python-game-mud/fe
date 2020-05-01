@@ -29,9 +29,37 @@ const LoginArea = styled.div`
 	padding: 3%;
 	border-radius: 10px;
 `;
+export default function Register(props) {
+	const history = useHistory();
+	const [user, setUser] = useState({
+		username: "",
+		password: "",
+	});
+	const [errors, setErrors] = useState([]);
 
-export default function Login(props) {
-	// const [loading, setLoading] = useState(true);
+	const handleChange = e => {
+		setUser({ ...user, [e.target.name]: e.target.value });
+	};
+	const handleSubmit = e => {
+		e.preventDefault();
+		axios
+			.post(
+				"https://cors-anywhere.herokuapp.com/" +
+					"http://themudgame.herokuapp.com/api/login/",
+				user
+			)
+			.then(res => {
+				console.log(res);
+				localStorage.setItem("token", res.data.key);
+				history.push("/game");
+			})
+			.catch(err => {
+				console.error(err.response);
+				err.response.data.non_field_errors &&
+					setErrors(err.response.data.non_field_errors);
+			});
+	};
+	const routeToRegistrationPage = e => {
 		e.preventDefault();
 		history.push("/register");
 	};
@@ -43,7 +71,6 @@ export default function Login(props) {
 					<h1>Username:</h1>
 					<input
 						name="username"
-						type="text"
 						value={user.username}
 						onChange={handleChange}
 					></input>
@@ -54,8 +81,8 @@ export default function Login(props) {
 						value={user.password}
 						onChange={handleChange}
 					></input>
+					<button onClick={handleSubmit}> LETS GOOOOOOO </button>
 				</form>
-				<button onClick={handleSubmit}> LETS GOOOOOOO </button>
 				<h1 onClick={routeToRegistrationPage}>Don't have an account???</h1>
 			</LoginArea>
 			{errors.length > 0 && (
@@ -65,12 +92,6 @@ export default function Login(props) {
 					))}
 				</div>
 			)}
-			<div>
-				<p>Don't have an account yet?</p>
-				<p>
-					Click <Link to="/register">here</Link> to register.
-				</p>
-			</div>
 		</Centerer>
 	);
 }
